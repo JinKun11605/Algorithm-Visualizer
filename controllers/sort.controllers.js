@@ -14,7 +14,11 @@ module.exports.bubblesort = (req, res) => {
 // [POST] sort/bubblesort
 module.exports.bubblesortPost = (req, res) => {
     const numbersString = req.body.numbers_input
-    const numbersArray = numbersString.split(",").map(number => parseInt(number.trim()))
+    let numbersArray = numbersString.split(",").map(number => parseInt(number.trim()))
+
+    if (numbersArray.some(number => isNaN(number))){
+        numbersArray = []
+    }
 
     res.render("pages/sort/bubblesort", {
         pageTitle: "Bubble Sort",
