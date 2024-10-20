@@ -1,0 +1,55 @@
+/* Định dạng phần sidebar */
+.sider {
+    width: 200px;
+    height: 100%;
+    background-color: #f0f0f0; /* Màu nền cho sidebar */
+    padding: 20px; /* Khoảng cách bên trong của sidebar */
+    border-right: 1px solid #ccc; /* Đường viền bên phải */
+    position: absolute; /* Để sidebar nằm sát vào lề trái */
+    left: 0; /* Sát vào lề trái */
+    top: 0; /* Bắt đầu từ đỉnh của trang */
+}
+
+/* Định dạng phần menu bên trong */
+.inner-menu ul {
+    list-style: none; /* Bỏ gạch đầu dòng của danh sách */
+    padding: 10px 0;
+}
+
+.inner-menu li {
+    padding: 10px 0;
+    margin-left: 10px; /* Thụt vào cho các mục li */
+}
+
+/* Thụt vào để không bị sider đề lên */
+.body .main {
+    margin: 15px;
+    position: relative;
+    left: 200px;
+    width: calc(100% - 230px);
+}
+
+#visualization {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    border: 1px solid #7FC5FC;
+    border-radius: 20px;
+    margin-top: 100px;
+}
+
+
+.block {
+    width: 60px;
+    height: 60px;
+    background-color: #7FC5FC;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 5px;
+}
