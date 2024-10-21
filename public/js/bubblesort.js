@@ -1,88 +1,109 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     const sortButton = document.getElementById('sort-button');
-    const blocks = document.querySelectorAll('.block');
-    let numbersArray = Array.from(blocks).map(block => parseInt(block.textContent));
+    let blocks = Array.from(document.querySelectorAll('.block'));
+    let numbersArray = blocks.map(block => parseInt(block.textContent));
 
-    // Đặt vị trí ban đầu cho các khối để tránh bị đè lên nhau
+    const visualization = document.getElementById('visualization');
+    const visualizationWidth = visualization.offsetWidth;
+
+    const blockWidth = 60; // Chiều rộng của mỗi khối
+    const blockMargin = 20; // Khoảng cách giữa các khối
+
+    const totalBlocksWidth = blocks.length * blockWidth + (blocks.length - 1) * blockMargin;
+    const startPosition = (visualizationWidth - totalBlocksWidth) / 2;
+
+    // Đặt vị trí ban đầu cho các khối để căn giữa
     blocks.forEach((block, index) => {
-        block.style.left = `${index * 80}px`; // Cách nhau 80px theo chiều ngang
+        const leftPosition = startPosition + index * (blockWidth + blockMargin);
+        block.style.left = `${leftPosition}px`;
     });
 
-    // Hàm swap với hiệu ứng di chuyển lên/xuống 200px
-    function swapBlocks(block1, block2) {
-        return new Promise(resolve => {
-            // Lấy vị trí ban đầu của các khối
-            const block1Left = block1.offsetLeft;
-            const block2Left = block2.offsetLeft;
+    // Hàm sleep để tạm dừng
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-            // Tính toán khoảng cách giữa hai khối
-            const distance = block2Left - block1Left;
+    // Hàm swap với hiệu ứng di chuyển
+    async function swapBlocks(block1, block2) {
+        // Lấy vị trí ban đầu của các khối
+        const x1 = parseFloat(block1.style.left);
+        const x2 = parseFloat(block2.style.left);
 
-            // Bước 1: Di chuyển lên 200px cho block1 và xuống 200px cho block2
-            block1.style.transform = `translateY(-200px)`;
-            block2.style.transform = `translateY(200px)`;
+        // Tính toán khoảng cách giữa hai khối
+        const distance = x2 - x1;
 
-            // Chờ animation di chuyển lên/xuống
-            setTimeout(() => {
-                // Bước 2: Di chuyển sang ngang
-                block1.style.transform = `translate(${distance}px, -200px)`;
-                block2.style.transform = `translate(${-distance}px, 200px)`;
+        // Di chuyển lên/xuống
+        block1.style.transition = 'transform 0.5s';
+        block2.style.transition = 'transform 0.5s';
 
-                // Chờ 0.5 giây để hoàn thành di chuyển ngang
-                setTimeout(() => {
-                    // Bước 3: Di chuyển xuống lại vị trí mới
-                    block1.style.transform = `translate(${distance}px, 0)`;
-                    block2.style.transform = `translate(${-distance}px, 0)`;
+        block1.style.transform = 'translateY(-100px)';
+        block2.style.transform = 'translateY(100px)';
 
-                    // Chờ thêm 0.5 giây để hoàn thành di chuyển xuống
-                    setTimeout(() => {
-                        // Cập nhật vị trí thực tế của các khối
-                        block1.style.left = `${block2Left}px`;
-                        block2.style.left = `${block1Left}px`;
+        await sleep(500);
 
-                        // Reset lại transform để trở về vị trí mới
-                        block1.style.transform = '';
-                        block2.style.transform = '';
+        // Di chuyển ngang
+        block1.style.transform = `translate(${distance}px, -100px)`;
+        block2.style.transform = `translate(${-distance}px, 100px)`;
 
-                        // Hoán đổi nội dung của hai khối
-                        [block1.textContent, block2.textContent] = [block2.textContent, block1.textContent];
+        await sleep(500);
 
-                        // Hoán đổi vị trí trong mảng blocks
-                        [blocks[Array.from(blocks).indexOf(block1)], blocks[Array.from(blocks).indexOf(block2)]] =
-                            [blocks[Array.from(blocks).indexOf(block2)], blocks[Array.from(blocks).indexOf(block1)]];
+        // Di chuyển xuống/lên
+        block1.style.transform = `translate(${distance}px, 0)`;
+        block2.style.transform = `translate(${-distance}px, 0)`;
 
-                        resolve();
-                    }, 500); // Chờ để hoàn thành di chuyển xuống
-                }, 500); // Chờ để hoàn thành di chuyển ngang
-            }, 500); // Chờ để hoàn thành di chuyển lên/xuống
-        });
+        await sleep(500);
+
+        // Cập nhật vị trí `left` của các khối
+        block1.style.left = `${x2}px`;
+        block2.style.left = `${x1}px`;
+
+        // Reset transform và transition
+        block1.style.transform = '';
+        block2.style.transform = '';
+
+        block1.style.transition = '';
+        block2.style.transition = '';
+
+        // Hoán đổi các khối trong DOM
+        const parent = block1.parentNode;
+        parent.insertBefore(block2, block1);
+
+        // Cập nhật mảng blocks
+        const index1 = blocks.indexOf(block1);
+        const index2 = blocks.indexOf(block2);
+        [blocks[index1], blocks[index2]] = [blocks[index2], blocks[index1]];
     }
 
-    // Hàm Bubble Sort với hiệu ứng swap mới
+    // Hàm Bubble Sort với async/await
     async function bubbleSort(arr) {
-        for (let i = 0; i < arr.length - 1; i++) {
-            for (let j = 0; j < arr.length - i - 1; j++) {
-                blocks[j].style.backgroundColor = 'red'; // Đánh dấu phần tử đang so sánh
+        const n = arr.length;
+        for (let i = 0; i < n - 1; i++) {
+            let swapped = false;
+            for (let j = 0; j < n - i - 1; j++) {
+                blocks[j].style.backgroundColor = 'red';
                 blocks[j + 1].style.backgroundColor = 'red';
 
-                await new Promise(resolve => setTimeout(resolve, 500)); // Tạm dừng để dễ theo dõi
+                await sleep(500);
 
                 if (arr[j] > arr[j + 1]) {
                     // Đổi chỗ hai phần tử trong mảng
-                    let temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+                    [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
 
-                    // Hoán đổi khối với hiệu ứng swap mới
+                    // Hoán đổi khối với hiệu ứng swap
                     await swapBlocks(blocks[j], blocks[j + 1]);
+
+                    swapped = true;
                 }
 
-                blocks[j].style.backgroundColor = '#7FC5FC'; // Đặt lại màu sau khi so sánh
+                blocks[j].style.backgroundColor = '#7FC5FC';
                 blocks[j + 1].style.backgroundColor = '#7FC5FC';
             }
-            blocks[arr.length - i - 1].style.backgroundColor = 'green'; // Đánh dấu phần tử đã được sắp xếp
+            blocks[n - i - 1].style.backgroundColor = 'green';
+
+            if (!swapped) break; // Nếu không có hoán đổi nào, dừng thuật toán
         }
-        blocks[0].style.backgroundColor = 'green'; // Đánh dấu phần tử đầu tiên
+        // Đánh dấu các khối còn lại là đã sắp xếp
+        for (let k = 0; k < n; k++) {
+            blocks[k].style.backgroundColor = 'green';
+        }
     }
 
     // Thêm sự kiện click cho nút "Bắt Đầu Sắp Xếp"
