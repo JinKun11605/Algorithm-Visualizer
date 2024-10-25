@@ -9,4 +9,8 @@ router.get("/bubblesort", controllers.bubblesort)
 
 router.post("/bubblesort", controllers.bubblesortPost)
 
+router.get("/interchangesort", controllers.interchangesort)
+
+router.post("/interchangesort", controllers.interchangesortPost)
+
 module.exports = router

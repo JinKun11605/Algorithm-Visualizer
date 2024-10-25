@@ -25,3 +25,25 @@ module.exports.bubblesortPost = (req, res) => {
         numbersArray: numbersArray,
     })
 }
+
+// [GET] sort/interchangesort
+module.exports.interchangesort = (req, res) => {
+    res.render("pages/sort/interchangesort", {
+        pageTitle: "Interchange Sort"
+    })
+}
+
+// [POST] sort/interchangesort
+module.exports.interchangesortPost = (req, res) => {
+    const numbersString = req.body.numbers_input
+    let numbersArray = numbersString.split(",").map(number => parseInt(number.trim()))
+
+    if (numbersArray.some(number => isNaN(number))){
+        numbersArray = []
+    }
+
+    res.render("pages/sort/interchangesort", {
+        pageTitle: "Interchange Sort",
+        numbersArray: numbersArray,
+    })
+}
