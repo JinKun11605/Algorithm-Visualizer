@@ -1,8 +1,8 @@
-mixin base-sort-form(pageTitle, numbersArray)
+mixin base-sort-form(pageTitle, path, numbersArray)
     .container
         h1.text-center.mt-5 #{pageTitle}
         .mt-4
-            form(action="/sort/bubblesort" method="POST")
+            form(action=`/sort/${path}` method="POST")
                 label(for="numbers-input") Nhập các số, cách nhau bằng dấu phẩy:
                 input(
                     id="numbers-input" 
