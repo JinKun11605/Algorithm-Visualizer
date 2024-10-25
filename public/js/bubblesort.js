@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Nút "Bắt Đầu Sắp Xếp"
-    sortButton.addEventListener('click', () => {
+    sortButton.addEventListener('click', () => { {
         bubbleSort(numbersArray);
     });
 });
