@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // Thêm sự kiện click cho nút "Bắt Đầu Sắp Xếp"
+    // Nút "Bắt Đầu Sắp Xếp"
     sortButton.addEventListener('click', function () {
         bubbleSort(numbersArray);
     });
