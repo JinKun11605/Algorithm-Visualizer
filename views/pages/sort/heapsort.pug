@@ -1,0 +1,7 @@
+extends ../../layouts/default.pug
+include ../../mixins/sort-form.pug
+
+block main
+    +base-sort-form(pageTitle, "heapsort", numbersArray)
+
+    script(type="module" src="/js/heapsort.js")
