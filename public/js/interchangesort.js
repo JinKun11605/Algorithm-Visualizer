@@ -27,8 +27,8 @@ const bubbleSort = async (arr) => {
 
                 swapped = true;
             }
-            blocks[i].style.backgroundColor = '#7FC5FC';
-            blocks[j].style.backgroundColor = '#7FC5FC';
+            blocks[i].style.backgroundColor = '#5C636A';
+            blocks[j].style.backgroundColor = '#5C636A';
         }
         blocks[i].style.backgroundColor = 'green';
 
