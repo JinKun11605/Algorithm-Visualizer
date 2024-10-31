@@ -4,18 +4,19 @@ mixin base-sort-form(pageTitle, path, numbersArray)
         .mt-4
             form(action=`/sort/${path}` method="POST")
                 label(for="numbers-input") Nhập các số, cách nhau bằng dấu phẩy:
-                input(
-                    id="numbers-input" 
-                    name="numbers_input" 
-                    class="form-control" 
-                    type="text" 
-                    placeholder="Ví dụ: 5, 3, 8, 4, 2"
-                )
-                button(
-                    class="btn btn-secondary mt-3" 
-                    type="submit"
-                ) Xác nhận
+                .row
+                    .col-6
+                        input(
+                            id="numbers-input" 
+                            name="numbers_input" 
+                            class="form-control" 
+                            type="text" 
+                            placeholder="Ví dụ: 5, 3, 8, 4, 2"
+                        )
+                    .col-2
+                        button.btn.btn-secondary#random-button(type="button") Ngẫu nhiên
 
+                button.btn.btn-secondary.mt-3(type="submit") Xác nhận
         .mt-4
             #visualization
                 if numbersArray && numbersArray.length > 0
@@ -25,6 +26,8 @@ mixin base-sort-form(pageTitle, path, numbersArray)
                     h4.text-center Nhập vào các số cần sắp xếp
         
         button(
-            class="btn btn-primary mt-3" 
+            class="btn btn-secondary mt-4" 
             id="sort-button"
         ) Bắt Đầu Sắp Xếp
+
+    script(src="/event/random-button.js") 
