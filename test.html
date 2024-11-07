@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge Sort Animation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    #tree-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
+    }
+
+    .node {
+      width: 50px;
+      height: 50px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      position: absolute;
+      transition: transform 1s, opacity 1s;
+      opacity: 0;
+    }
+
+    .line {
+      position: absolute;
+      width: 2px;
+      background-color: gray;
+      z-index: -1;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Merge Sort Animation</h1>
+  <div id="tree-container"></div>
+  <button onclick="startAnimation()">Bắt đầu Sắp Xếp</button>
+
+  <script>
+    const array = [1, 16, 3, 7, 16]; // Mảng cần sắp xếp
+    const treeContainer = document.getElementById('tree-container');
+    const nodeSize = 50; // Kích thước node
+    const spacing = 120; // Khoảng cách giữa các node
+
+    function createNode(value, x, y) {
+      const node = document.createElement('div');
+      node.className = 'node';
+      node.textContent = value;
+      node.style.transform = `translate(${x}px, ${y}px)`;
+      node.style.opacity = '1';
+      treeContainer.appendChild(node);
+      return node;
+    }
+
+    function drawLine(x1, y1, x2, y2) {
+      const line = document.createElement('div');
+      const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+      const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+      line.className = 'line';
+      line.style.width = `${length}px`;
+      line.style.transform = `translate(${x1}px, ${y1}px) rotate(${angle}deg)`;
+      treeContainer.appendChild(line);
+    }
+
+    function displayTree(arr, depth = 0, parentX = window.innerWidth / 2, parentY = 20) {
+      if (arr.length === 1) {
+        const x = parentX;
+        const y = parentY + depth * spacing;
+        return createNode(arr[0], x, y);
+      }
+
+      const mid = Math.floor(arr.length / 2);
+      const leftArr = arr.slice(0, mid);
+      const rightArr = arr.slice(mid);
+
+      const x1 = parentX - spacing / (depth + 1);
+      const x2 = parentX + spacing / (depth + 1);
+      const y = parentY + depth * spacing;
+
+      const leftNode = displayTree(leftArr, depth + 1, x1, parentY + spacing);
+      const rightNode = displayTree(rightArr, depth + 1, x2, parentY + spacing);
+
+      const parentNode = createNode('?', parentX, y);
+      drawLine(parentX + nodeSize / 2, y + nodeSize / 2, x1 + nodeSize / 2, y + spacing + nodeSize / 2);
+      drawLine(parentX + nodeSize / 2, y + nodeSize / 2, x2 + nodeSize / 2, y + spacing + nodeSize / 2);
+
+      setTimeout(() => {
+        parentNode.textContent = arr.join(',');
+      }, 1000);
+
+      return parentNode;
+    }
+
+    function startAnimation() {
+      treeContainer.innerHTML = ''; // Xóa cây cũ
+      displayTree(array);
+    }
+  </script>
+</body>
+</html>
