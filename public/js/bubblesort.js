@@ -1,7 +1,7 @@
 import { centerBlocks } from "../helpers/position-blocks.js";
 import { pause, swapBlocks } from "../helpers/swap-blocks.js";
 
-const blocks = Array.from(document.querySelectorAll('.block'));
+const blocks = Array.from(document.querySelectorAll(".block"));
 const numbersArray = blocks.map(block => parseInt(block.textContent));
 
 // * Gọi hàm centerBlocks từ position-blocks.js
@@ -14,11 +14,11 @@ const bubbleSort = async (arr) => {
         let swapped = false;
 
         for (let j = 0; j < n - i - 1; j++) {
-            blocks[j].style.backgroundColor = 'red';
-            blocks[j + 1].style.backgroundColor = 'red';
+            blocks[j].style.backgroundColor = "#3E97CF";
+            blocks[j + 1].style.backgroundColor = "#3E97CF";
 
             // * Gọi hàm pause từ swap-blocks.js
-            await pause(500);
+            await pause(250);
 
             if (arr[j] > arr[j + 1]) {
                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
@@ -28,20 +28,20 @@ const bubbleSort = async (arr) => {
 
                 swapped = true;
             }
-            blocks[j].style.backgroundColor = '#5C636A';
-            blocks[j + 1].style.backgroundColor = '#5C636A';
+            blocks[j].style.backgroundColor = "#5C636A";
+            blocks[j + 1].style.backgroundColor = "#5C636A";
         }
-        // blocks[n - i - 1].style.backgroundColor = 'green';
+        blocks[n - i - 1].style.backgroundColor = "#4DBE8A";
 
         if (!swapped) break; // Nếu không có hoán đổi, đã sắp xếp xong.
     }
-    // for (let k = 0; k < n; k++) {
-    //     blocks[k].style.backgroundColor = 'green';
-    // }
+    for (let k = 0; k < n; k++) {
+        blocks[k].style.backgroundColor = "#4DBE8A";
+    }
 }
 
 // Nút "Bắt Đầu Sắp Xếp"
 const sortButton = document.querySelector("#sort-button");
-sortButton.addEventListener('click', () => {
+sortButton.addEventListener("click", () => {
     bubbleSort(numbersArray);
 });

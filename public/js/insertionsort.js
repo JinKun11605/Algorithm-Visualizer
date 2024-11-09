@@ -10,24 +10,27 @@ centerBlocks("visualization", blocks, 20);
 const insertionSort = async (arr, blocks) => {
     const n = arr.length;
 
-    for (let i = 1; i < n; i++){
-        let key = arr[i];
-        let index = i - 1;
-        blocks[i].style.backgroundColor = "#3E97CF";
-
-        while (index >= 0 && key < arr[index]) {
-            arr[index + 1] = arr[index];
-            blocks[index + 1].textContent = blocks[index + 1].textContent;
-            index--;
-
-            await pause(500);
-        }
-        arr[index + 1] = key;
-        blocks[index + 1].textContent = key;
-
+    for (let i = 0; i < n; i++) { //! Bắt đầu từ 0 để đèn sáng từ đầu.
+        let index = i;
+        blocks[index].style.backgroundColor = "#E94345";
         await pause(500);
 
-        blocks[key].style.backgroundColor = "#5C636A";
+        while (index > 0 && arr[index] < arr[index - 1]) {
+            await pause(50);
+            await swapBlocks(blocks[index - 1], blocks[index]);
+
+            blocks[index].style.backgroundColor = "#5C636A";
+
+            [arr[index], arr[index - 1]] = [arr[index - 1], arr[index]];
+            index--;
+
+            blocks[index].style.backgroundColor = "#E94345";
+        }
+        blocks[index].style.backgroundColor = "#5C636A";
+    }
+
+    for (let k = 0; k < n; k++) {
+        blocks[k].style.backgroundColor = '#4DBE8A';
     }
 }
 
