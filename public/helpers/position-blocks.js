@@ -1,4 +1,4 @@
-export const centerBlocks = (id_visualization, blocks, blockMargin) => {
+export const centerBlocks = (id_visualization, blocks, blockMargin, topPosition = null) => {
     const visualization = document.querySelector(`#${id_visualization}`);
     const visualizationWidth = visualization.offsetWidth;
 
@@ -9,6 +9,9 @@ export const centerBlocks = (id_visualization, blocks, blockMargin) => {
     blocks.forEach((block, index) => {
         const leftPosition = startLeftPosition + index * (blockWidth + blockMargin);
 
-        block.style.left = `${leftPosition}px`
+        block.style.left = `${leftPosition}px`;
+        if (topPosition != null) {
+            block.style.top = `${topPosition}px`;
+        }
     });
 }

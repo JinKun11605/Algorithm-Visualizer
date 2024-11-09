@@ -50,7 +50,7 @@ module.exports.interchangesortPost = (req, res) => {
 
 // [GET] sort/insertionsort
 module.exports.insertionsort = (req, res) => {
-    res.render("pages/sort/interchangesort", {
+    res.render("pages/sort/insertionsort", {
         pageTitle: "Insertion Sort"
     })
 }
