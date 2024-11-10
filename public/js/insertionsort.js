@@ -7,42 +7,35 @@ const numbersArray = blocks.map(block => parseInt(block.textContent));
 // * Gọi hàm centerBlocks từ position-blocks.js
 centerBlocks("visualization", blocks, 20);
 
-const bubbleSort = async (arr) => {
+const insertionSort = async (arr, blocks) => {
     const n = arr.length;
 
-    for (let i = 0; i < n - 1; i++) {
-        let swapped = false;
+    for (let i = 0; i < n; i++) { //! Bắt đầu từ 0 để đèn sáng từ đầu.
+        let index = i;
+        blocks[index].style.backgroundColor = "#E94345";
+        await pause(500);
 
-        for (let j = 0; j < n - i - 1; j++) {
-            blocks[j].style.backgroundColor = 'red';
-            blocks[j + 1].style.backgroundColor = 'red';
+        while (index > 0 && arr[index] < arr[index - 1]) {
+            await pause(50);
+            await swapBlocks(blocks[index - 1], blocks[index]);
 
-            // * Gọi hàm pause từ swap-blocks.js
-            await pause(500);
+            blocks[index].style.backgroundColor = "#5C636A";
 
-            if (arr[j] > arr[j + 1]) {
-                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            [arr[index], arr[index - 1]] = [arr[index - 1], arr[index]];
+            index--;
 
-                // * Gọi hàm swapBlocks từ swap-blocks.js
-                await swapBlocks(blocks[j], blocks[j + 1]);
-
-                swapped = true;
-            }
-
-            blocks[j].style.backgroundColor = '#5C636A';
-            blocks[j + 1].style.backgroundColor = '#5C636A';
+            blocks[index].style.backgroundColor = "#E94345";
         }
-        // blocks[n - i - 1].style.backgroundColor = 'green';
-
-        if (!swapped) break; // Nếu không có hoán đổi, đã sắp xếp xong.
+        blocks[index].style.backgroundColor = "#5C636A";
     }
-    // for (let k = 0; k < n; k++) {
-    //     blocks[k].style.backgroundColor = 'green';
-    // }
+
+    for (let k = 0; k < n; k++) {
+        blocks[k].style.backgroundColor = '#4DBE8A';
+    }
 }
 
 // Nút "Bắt Đầu Sắp Xếp"
 const sortButton = document.querySelector("#sort-button");
 sortButton.addEventListener('click', () => {
-    bubbleSort(numbersArray);
+    insertionSort(numbersArray, blocks);
 });

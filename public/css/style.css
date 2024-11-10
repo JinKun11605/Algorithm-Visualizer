@@ -65,7 +65,8 @@
 }
 
 #sort-button {
-    background-color: #6C757D;
+    /* color: #F8F9FA;
+    background-color: #6C757D; */
     position: relative;
     transform: translateX(-50%);
     left: 50%;

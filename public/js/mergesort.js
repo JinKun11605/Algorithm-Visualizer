@@ -1,70 +1,41 @@
+import { centerBlocks } from "../helpers/position-blocks.js";
 import { pause } from "../helpers/swap-blocks.js";
 
 const blocks = Array.from(document.querySelectorAll('.block'));
 const numbersArray = blocks.map(block => parseInt(block.textContent));
 
-const topPosition = 50;
+// * Gọi hàm centerBlocks từ position-blocks.js
+centerBlocks("visualization", blocks, 20, 40);
 
-const centerBlocks = (id_visualization, blocks, blockMargin) => {
-    const visualization = document.querySelector(`#${id_visualization}`);
-    const visualizationWidth = visualization.offsetWidth;
-
-    const blockWidth = blocks[0].offsetWidth; 
-    const emptySpace = visualizationWidth - blockWidth * blocks.length - blockMargin * (blocks.length - 1);
-    const startLeftPosition = emptySpace / 2;
-
-    blocks.forEach((block, index) => {
-        const leftPosition = startLeftPosition + index * (blockWidth + blockMargin);
-
-        block.style.left = `${leftPosition}px`;
-        block.style.top = `${topPosition}px`;
-    });
-};
-
-centerBlocks("visualization", blocks, 20);
-
-// Hàm di chuyển xuống theo cấp đệ quy
-const setTopDown = (blocks, depth) => {
+const setColor = async (blocks, color) => {
     blocks.forEach(block => {
-        const currentTop = parseInt(block.style.top.replace('px', '')); // Lấy giá trị top hiện tại
-        const newTop = currentTop + 50; // Di chuyển thêm 50px
-        block.style.transition = `top 0.5s ease`;
-        block.style.top = `${newTop}px`;
+        block.style.backgroundColor = color;
     });
-};
-
-// Hàm di chuyển lên theo cấp đệ quy
-const setTopUp = (blocks, depth) => {
-    blocks.forEach(block => {
-        const currentTop = parseInt(block.style.top.replace('px', '')); // Lấy giá trị top hiện tại
-        const newTop = currentTop - 50; // Quay lại 50px
-        block.style.transition = `top 0.5s ease`;
-        block.style.top = `${newTop}px`;
-    });
-};
+}
 
 const merge = async (arr, blocks, l, m, r) => {
     const n1 = m - l + 1;
     const n2 = r - m;
     const leftArr = arr.slice(l, m + 1);
     const rightArr = arr.slice(m + 1, r + 1);
-
     const leftBlocks = blocks.slice(l, m + 1);
     const rightBlocks = blocks.slice(m + 1, r + 1);
+    //* Đổi màu
+    await setColor(leftBlocks, '#3E97CF');
+    await setColor(rightBlocks, '#E94345');
 
     let i = 0, j = 0, k = l;
 
-    await pause(1000); // Chờ để đảm bảo hiệu ứng trước đó hoàn thành
-
-    // Bắt đầu merge hai mảng
     while (i < n1 && j < n2) {
         if (leftArr[i] <= rightArr[j]) {
             arr[k] = leftArr[i];
-            blocks[k].textContent = leftArr[i]; // Cập nhật giá trị hiển thị trên block
+            blocks[k].textContent = leftArr[i];
+            await pause(250); // Chờ 250ms đổi giá trị
             i++;
         } else {
             arr[k] = rightArr[j];
-            blocks[k].textContent = rightArr[j]; // Cập nhật giá trị hiển thị trên block
+            blocks[k].textContent = rightArr[j];
+            await pause(250); // Chờ 250ms đổi giá trị
             j++;
         }
         k++;
@@ -73,6 +44,7 @@ const merge = async (arr, blocks, l, m, r) => {
     while (i < n1) {
         arr[k] = leftArr[i];
         blocks[k].textContent = leftArr[i];
+        await pause(250); // Chờ 250ms đổi giá trị
         i++;
         k++;
     }
@@ -80,39 +52,54 @@ const merge = async (arr, blocks, l, m, r) => {
     while (j < n2) {
         arr[k] = rightArr[j];
         blocks[k].textContent = rightArr[j];
+        await pause(250); // Chờ 250ms đổi giá trị
         j++;
         k++;
     }
-
-    await pause(500); // Chờ để hiển thị kết quả
+    
+    const mergedBlocks = blocks.slice(l, r + 1);
+    await setColor(mergedBlocks, '#4DBE8A');
 };
 
-const mergeSort = async (arr, blocks, l, r, depth = 0) => {
+const setTopDown = (blocks) => {
+    blocks.forEach(block => {
+        const currentTop = parseInt(block.style.top);
+        const newTop = currentTop + 60;
+        block.style.transition = `0.75s ease`;
+        block.style.top = `${newTop}px`;
+    });
+}
+
+const setTopUp = (blocks) => {
+    blocks.forEach(block => {
+        const currentTop = parseInt(block.style.top);
+        const newTop = currentTop - 60;
+        block.style.transition = `top 0.75s ease`;
+        block.style.top = `${newTop}px`;
+    });
+}
+
+const mergeSort = async (arr, blocks, l, r) => {
     if (l < r) {
         const m = Math.floor((l + r) / 2);
 
         const leftBlocks = blocks.slice(l, m + 1);
         const rightBlocks = blocks.slice(m + 1, r + 1);
+        //* Đổi màu
+        await setColor(leftBlocks, '#3E97CF');
+        await setColor(rightBlocks, '#E94345');
 
-        // Di chuyển xuống khi vào cấp đệ quy
-        setTopDown(leftBlocks, depth + 1);
-        setTopDown(rightBlocks, depth + 1);
+        setTopDown(leftBlocks);
+        setTopDown(rightBlocks);
+        await pause(750);
 
-        await pause(500); // Chờ để hiển thị di chuyển xuống
-
-        // Đệ quy xử lý nửa trái
-        await mergeSort(arr, blocks, l, m, depth + 1);
-        // Đệ quy xử lý nửa phải
-        await mergeSort(arr, blocks, m + 1, r, depth + 1);
-
-        // Merge hai nửa
+        await mergeSort(arr, blocks, l, m);
+        await mergeSort(arr, blocks, m + 1, r);
         await merge(arr, blocks, l, m, r);
 
-        // Di chuyển lên khi hoàn thành cấp
-        setTopUp(leftBlocks, depth + 1);
-        setTopUp(rightBlocks, depth + 1);
-
-        await pause(500); // Chờ để hiển thị di chuyển lên
+        setTopUp(leftBlocks);
+        setTopUp(rightBlocks);
+        await pause(750);
     }
 };
 
