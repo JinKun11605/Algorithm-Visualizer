@@ -32,7 +32,7 @@ const shakerSort = async (arr) => {
             blocks[j].style.backgroundColor = '#5C636A';
             j--;
         }
-        for (let t = 0; t <= j; t++) {
+        for (let t = 0; t <= k; t++) {
             blocks[t].style.backgroundColor = "#4DBE8A"; // Đổi màu xanh có các ô đã đúng vị trí
         }
 
@@ -57,14 +57,11 @@ const shakerSort = async (arr) => {
             blocks[j + 1].style.backgroundColor = '#5C636A';
             j++;
         }
-        for (let t = j; t <= r; t++) {
+        for (let t = k; t <= r; t++) {
             blocks[t].style.backgroundColor = "#4DBE8A"; // Đổi màu xanh có các ô đã đúng vị trí
         }
 
         r = k;
-    }
-    for (let k = 0; k < n; k++) {
-        blocks[k].style.backgroundColor = '#4DBE8A';
     }
 }
 
