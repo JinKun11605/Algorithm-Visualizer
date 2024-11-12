@@ -9,9 +9,13 @@ export const centerBlocks = (id_visualization, blocks, blockMargin, topPosition 
     blocks.forEach((block, index) => {
         const leftPosition = startLeftPosition + index * (blockWidth + blockMargin);
 
+        // block.style.transition = 'left 0.75s ease'; //! Dùng left khá là lag
         block.style.left = `${leftPosition}px`;
-        if (topPosition != null) {
+
+        if (topPosition != null) { //! Dùng ở MergeSort
             block.style.top = `${topPosition}px`;
         }
     });
+
+    return startLeftPosition; //! Dùng ở BinaryInsertionSort
 }
