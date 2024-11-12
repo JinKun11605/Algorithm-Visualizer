@@ -9,15 +9,15 @@ centerBlocks("visualization", blocks, 20);
 
 const shakerSort = async (arr) => {
     const n = arr.length;
-    let swapped = false;
 	let l = 0, r = n - 1, k = n;
 
     while (l < r) {
         let j = r;
+        
         while (j > l) {
             if (arr[j - 1] > arr[j]) {
-                blocks[j - 1].style.backgroundColor = 'red';
-                blocks[j].style.backgroundColor = 'red';
+                blocks[j - 1].style.backgroundColor = '#3E97CF';
+                blocks[j].style.backgroundColor = '#3E97CF';
 
                 // * Gọi hàm pause từ swap-blocks.js
                 await pause(500);
@@ -26,20 +26,23 @@ const shakerSort = async (arr) => {
                 // * Gọi hàm swapBlocks từ swap-blocks.js
                 await swapBlocks(blocks[j - 1], blocks[j]);
 
-                swapped = true;
                 k = j;
             }
             blocks[j - 1].style.backgroundColor = '#5C636A';
             blocks[j].style.backgroundColor = '#5C636A';
             j--;
         }
+        for (let t = 0; t <= k; t++) {
+            blocks[t].style.backgroundColor = "#4DBE8A"; // Đổi màu xanh có các ô đã đúng vị trí
+        }
+
         l = k;
 
         j = l;
         while (r > j) {
             if (arr[j] > arr[j + 1]) {
-                blocks[j].style.backgroundColor = 'red';
-                blocks[j + 1].style.backgroundColor = 'red';
+                blocks[j].style.backgroundColor = '#3E97CF';
+                blocks[j + 1].style.backgroundColor = '#3E97CF';
 
                 // * Gọi hàm pause từ swap-blocks.js
                 await pause(500);
@@ -48,24 +51,22 @@ const shakerSort = async (arr) => {
                 // * Gọi hàm swapBlocks từ swap-blocks.js
                 await swapBlocks(blocks[j], blocks[j + 1]);
 
-                swapped = true;
                 k = j;
             }
             blocks[j].style.backgroundColor = '#5C636A';
             blocks[j + 1].style.backgroundColor = '#5C636A';
             j++;
         }
-        r = k;
+        for (let t = k; t <= r; t++) {
+            blocks[t].style.backgroundColor = "#4DBE8A"; // Đổi màu xanh có các ô đã đúng vị trí
+        }
 
-        if (!swapped) break; // Nếu không có hoán đổi, đã sắp xếp xong.
+        r = k;
     }
-    // for (let k = 0; k < n; k++) {
-    //     blocks[k].style.backgroundColor = 'green';
-    // }
 }
 
 // Nút "Bắt Đầu Sắp Xếp"
 const sortButton = document.querySelector("#sort-button");
 sortButton.addEventListener('click', () => {
     shakerSort(numbersArray);
-});
+})

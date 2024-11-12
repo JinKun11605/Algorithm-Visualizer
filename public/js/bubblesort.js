@@ -14,11 +14,11 @@ const bubbleSort = async (arr) => {
         let swapped = false;
 
         for (let j = 0; j < n - i - 1; j++) {
-            blocks[j].style.backgroundColor = "#3E97CF";
+            blocks[j].style.backgroundColor = "#3E97CF"; //! Blue
             blocks[j + 1].style.backgroundColor = "#3E97CF";
 
             // * Gọi hàm pause từ swap-blocks.js
-            await pause(250);
+            await pause(500);
 
             if (arr[j] > arr[j + 1]) {
                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
@@ -33,10 +33,10 @@ const bubbleSort = async (arr) => {
         }
         blocks[n - i - 1].style.backgroundColor = "#4DBE8A";
 
-        if (!swapped) break; // Nếu không có hoán đổi, đã sắp xếp xong.
+        if (!swapped) break; // Nếu không có hoán đổi, đã sắp xếp xong
     }
     for (let k = 0; k < n; k++) {
-        blocks[k].style.backgroundColor = "#4DBE8A";
+        blocks[k].style.backgroundColor = "#4DBE8A"; //! Green
     }
 }
 
@@ -44,4 +44,4 @@ const bubbleSort = async (arr) => {
 const sortButton = document.querySelector("#sort-button");
 sortButton.addEventListener("click", () => {
     bubbleSort(numbersArray);
-});
+})
