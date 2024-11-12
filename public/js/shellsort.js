@@ -44,9 +44,9 @@ const shellSort = async (arr, blocks) => {
         for (let groupIndex = 0; groupIndex < gap; groupIndex++) {
             const groupColor = "#3E97CF";
             const otherColor = "#5C636A";
-            
+
             colorGroupBlocks(blocks, gap, groupIndex, groupColor, otherColor);
-            await pause(500);
+            await pause(300);
 
             for (let i = groupIndex + gap; i < n; i += gap) {
                 let x = arr[i];
@@ -54,7 +54,7 @@ const shellSort = async (arr, blocks) => {
                 let j = i;
 
                 blocks[j].style.backgroundColor = "#E94345"; // Đỏ
-                await pause(500);
+                await pause(300);
 
                 while (j >= gap && arr[j - gap] > x && (j - gap) % gap === groupIndex) {
                     arr[j] = arr[j - gap];
@@ -88,7 +88,7 @@ const shellSort = async (arr, blocks) => {
                     blocks[i].style.backgroundColor = groupColor; // Xanh lam
                 }
             }
-            await pause(500);
+            await pause(300);
         }
         gap = Math.floor(gap / 2);
     }
