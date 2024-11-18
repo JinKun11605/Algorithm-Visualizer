@@ -34,9 +34,6 @@ const bubbleSort = async (arr) => {
 
         if (!swapped) break; // Nếu không có hoán đổi nào, dừng thuật toán
     }
-    // for (let k = 0; k < n; k++) {
-    //     blocks[k].style.backgroundColor = 'green';
-    // }
 }
 
 // Nút "Bắt Đầu Sắp Xếp"
