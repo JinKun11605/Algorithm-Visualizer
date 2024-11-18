@@ -10,62 +10,70 @@ const blockMargin = 20;
 // * Gọi hàm centerBlocks từ position-blocks.js
 const startLeftPosition = centerBlocks("visualization", blocks, blockMargin);
 
-// Hàm di chuyển block đến vị trí mới
-const moveBlockToIndex = (block, index) => {
-    const newLeft = startLeftPosition + index * (blockWidth + blockMargin);
-    block.style.transition = 'left 0.5s';
+const moveBlock = (block, newIndex) => {
+    const newLeft = startLeftPosition + newIndex * (blockWidth + blockMargin);
+
+    block.style.transition = 'left 0.75s ease';
     block.style.left = `${newLeft}px`;
-};
+}
 
-
-// Hàm shift tương đương với mã Java của bạn
 const shift = async (arr, blocks, l, r) => {
     let i = l;
     let X = arr[i];
-    let savedBlock = blocks[i];
+    let tempBlock = blocks[i];
     let j = 2 * i + 1;
 
     while (j <= r) {
-        // Tô màu vàng cho nút cha hiện tại
-        blocks[i].style.backgroundColor = "#FFD700"; // Vàng
-        await pause(500);
+        // Bật màu đỏ cho nút cha
+        blocks[i].style.backgroundColor = "#E94345"; // Đỏ
+        await pause(250);
 
         if (j < r && arr[j] < arr[j + 1]) {
             j++;
         }
 
-        // Tô màu xanh cho nút con được chọn
+        // Bật màu đỏ cho nút con
         blocks[j].style.backgroundColor = "#3E97CF"; // Xanh
+        if (j + 1 <= r) {
+            blocks[j + 1].style.backgroundColor = "#3E97CF"; // Xanh
+        }
         await pause(500);
 
         if (arr[j] <= X) {
-            // Reset màu
-            blocks[i].style.backgroundColor = "#5C636A";
-            blocks[j].style.backgroundColor = "#5C636A";
-            break;
+            blocks[i].style.backgroundColor = "#5C636A"; // Tắt màu nút cha
+            blocks[j].style.backgroundColor = "#5C636A"; // Tắt màu nút con
+            if (j + 1 <= r) {
+                blocks[j + 1].style.backgroundColor = "#5C636A"; // Tắt màu nút con
+            }
+            return;
         }
 
+        // Sắp lại cho đúng
         arr[i] = arr[j];
         blocks[i] = blocks[j];
-        moveBlockToIndex(blocks[i], i);
-        await pause(500);
 
-        // Reset màu sắc
+        moveBlock(blocks[i], i);
+        await pause(750);
+
+        // Tắt màu sắc nút cha
         blocks[i].style.backgroundColor = "#5C636A";
-        blocks[j].style.backgroundColor = "#5C636A";
+        if (j + 1 <= r) {
+            blocks[j + 1].style.backgroundColor = "#5C636A";
+        }
 
         i = j;
         j = 2 * i + 1;
+
+        // Sắp lại cho đúng
+        arr[i] = X;
+        blocks[i] = tempBlock;
+        moveBlock(blocks[i], i);
+        await pause(750);
+
+        blocks[i].style.backgroundColor = "#5C636A";
     }
+}
 
-    arr[i] = X;
-    blocks[i] = savedBlock;
-    moveBlockToIndex(blocks[i], i);
-    await pause(500);
-
-    // Reset màu sắc
-    blocks[i].style.backgroundColor = "#5C636A";
-};
 
 
 // Hàm tạo Max Heap
@@ -75,31 +83,24 @@ const createMaxHeap = async (arr, blocks, n) => {
         await shift(arr, blocks, l, n - 1);
         l--;
     }
-};
+}
 
-// Hàm Heap Sort
 const heapSort = async (arr, blocks) => {
     const n = arr.length;
     await createMaxHeap(arr, blocks, n);
     let r = n - 1;
 
     while (r > 0) {
-        // Hoán đổi phần tử đầu và cuối
         [arr[0], arr[r]] = [arr[r], arr[0]];
-
-        // Hoán đổi các khối
         await swapBlocks(blocks[0], blocks[r]);
-        [blocks[0], blocks[r]] = [blocks[r], blocks[0]];
 
-        // Đánh dấu phần tử đã được sắp xếp
-        blocks[r].style.backgroundColor = "#4DBE8A"; // Xanh lá cây
+        blocks[r].style.backgroundColor = "#4DBE8A";
 
         r--;
         await shift(arr, blocks, 0, r);
     }
 
-    // Đánh dấu phần tử còn lại
-    blocks[0].style.backgroundColor = "#4DBE8A"; // Xanh lá cây
+    blocks[0].style.backgroundColor = "#4DBE8A";
 };
 
 
