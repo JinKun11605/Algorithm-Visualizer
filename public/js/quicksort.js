@@ -9,11 +9,19 @@ centerBlocks("visualization", blocks, 20);
 
 const quickSort = async (arr, left, right) => {
     let i = left, j = right;
+
+        // Tô màu cam cho mảng con hiện tại
+    for (let k = left; k <= right; k++) {
+        blocks[k].style.backgroundColor = "#FFA753"; //TODO
+    }
+    await pause(500);
+    
+
     const pivotIndex = Math.floor((left + right) / 2);
     const pivot = arr[pivotIndex];
 
     // Bật màu pivot
-    blocks[pivotIndex].style.backgroundColor = "#E94345"; // Đỏ
+    blocks[pivotIndex].style.backgroundColor = "#E94345"; //!
     await pause(500);
 
     while (i <= j) {
@@ -36,8 +44,8 @@ const quickSort = async (arr, left, right) => {
 
         if (i <= j) {
             if (i !== j && arr[i] !== arr[j]) {
-                blocks[i].style.backgroundColor = "#FFE32F"; // Vàng
-                blocks[j].style.backgroundColor = "#FFE32F"; // Vàng
+                blocks[i].style.backgroundColor = "#3E97CF"; //?
+                blocks[j].style.backgroundColor = "#3E97CF"; //?
                 
                 await pause(500);
                 await swapBlocks(blocks[i], blocks[j]);
