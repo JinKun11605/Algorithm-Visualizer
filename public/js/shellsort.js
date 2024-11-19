@@ -53,7 +53,7 @@ const shellSort = async (arr, blocks) => {
                 let tempBlock = blocks[i];
                 let j = i;
 
-                blocks[j].style.backgroundColor = "#E94345"; // Đỏ
+                blocks[j].style.backgroundColor = "#E94345"; //!
                 await pause(300);
 
                 while (j >= gap && arr[j - gap] > x && (j - gap) % gap == groupIndex) {
