@@ -16,8 +16,18 @@ const moveBlock = (block, newIndex) => {
     block.style.left = `${newLeft}px`;
 }
 
+const isGreen = (block) => {
+    return block.style.backgroundColor == "rgb(77, 190, 138)";
+}
+
+// const isGreen = (block) => {
+//     const computedColor = window.getComputedStyle(block).backgroundColor;
+//     return computedColor === "rgb(77, 190, 138)"; // RGB của màu "#4DBE8A"
+// }
+
 const binaryInsertionSort = async (arr, blocks) => {
     const n = arr.length;
+    blocks[0].style.backgroundColor = "#4DBE8A";
 
     for (let i = 1; i < n; i++) {
         let x = arr[i];
@@ -31,8 +41,11 @@ const binaryInsertionSort = async (arr, blocks) => {
 
         while (l <= r) {
             let m = Math.floor((l + r) / 2);
+
+            //* Kiểm tra trước khi bật màu
+            let wasGreen = isGreen(blocks[m]);
             //* Bật màu cho mid block
-            blocks[m].style.backgroundColor = "#3E97CF"; //! Xanh
+            blocks[m].style.backgroundColor = "#3E97CF"; // zBlue
             await pause(350);
 
             if (arr[m] > x) {
@@ -41,7 +54,7 @@ const binaryInsertionSort = async (arr, blocks) => {
                 l = m + 1;
             }
 
-            blocks[m].style.backgroundColor = "#5C636A";
+            blocks[m].style.backgroundColor = (wasGreen) ? "#4DBE8A" : "#5C636A";
         }
         for (let j = i - 1; j >= l; j--) {
             arr[j + 1] = arr[j];
@@ -57,7 +70,9 @@ const binaryInsertionSort = async (arr, blocks) => {
         moveBlock(tempBlock, l);
         await pause(750);
 
-        blocks.forEach(block => block.style.backgroundColor = "#5C636A");
+        for (let k = 0; k <= i; k++) {
+            blocks[k].style.backgroundColor = "#4DBE8A";
+        }
     }
     for (let k = 0; k < n; k++) {
         blocks[k].style.backgroundColor = "#4DBE8A";
