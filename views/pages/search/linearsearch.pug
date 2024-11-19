@@ -1,0 +1,7 @@
+extends ../../layouts/default.pug
+include ../../mixins/search-form.pug
+
+block main
+    +base-search-form(pageTitle, "linearsearch",numbersString, numbersArray, numberFind)
+
+    script(type="module" src="/js/search/linearsearch.js")

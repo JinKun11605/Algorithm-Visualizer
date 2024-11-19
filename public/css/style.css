@@ -64,7 +64,7 @@
     border-radius: 5px;
 }
 
-#sort-button {
+#sort-button #search-button{
     color: #D9F4FF;
     background-color: #51A6C2;
     font-size: 20px;

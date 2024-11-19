@@ -2,6 +2,6 @@ extends ../../layouts/default.pug
 include ../../mixins/sort-form.pug
 
 block main
-    +base-sort-form(pageTitle, "bubblesort", numbersArray)
+    +base-sort-form(pageTitle, "bubblesort", numbersString, numbersArray)
 
     script(type="module" src="/js/bubblesort.js")

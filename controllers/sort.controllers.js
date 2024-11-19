@@ -23,6 +23,7 @@ module.exports.bubblesortPost = (req, res) => {
     res.render("pages/sort/bubblesort", {
         pageTitle: "Bubble Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -45,6 +46,7 @@ module.exports.interchangesortPost = (req, res) => {
     res.render("pages/sort/interchangesort", {
         pageTitle: "Interchange Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -67,6 +69,7 @@ module.exports.insertionsortPost = (req, res) => {
     res.render("pages/sort/insertionsort", {
         pageTitle: "Insertion Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -89,6 +92,7 @@ module.exports.selectionsortPost = (req, res) => {
     res.render("pages/sort/selectionsort", {
         pageTitle: "Selection Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -111,6 +115,7 @@ module.exports.shakersortPost = (req, res) => {
     res.render("pages/sort/shakersort", {
         pageTitle: "Shaker Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -134,6 +139,7 @@ module.exports.binaryinsertionsortPost = (req, res) => {
     res.render("pages/sort/binaryinsertionsort", {
         pageTitle: "Binary Insertion Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -156,6 +162,7 @@ module.exports.shellsortPost = (req, res) => {
     res.render("pages/sort/shellsort", {
         pageTitle: "Shell Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -178,6 +185,7 @@ module.exports.mergesortPost = (req, res) => {
     res.render("pages/sort/mergesort", {
         pageTitle: "Merge Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -200,6 +208,7 @@ module.exports.quicksortPost = (req, res) => {
     res.render("pages/sort/quicksort", {
         pageTitle: "Quick Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
 
@@ -222,5 +231,6 @@ module.exports.heapsortPost = (req, res) => {
     res.render("pages/sort/heapsort", {
         pageTitle: "Heap Sort",
         numbersArray: numbersArray,
+        numbersString: numbersString,
     })
 }
