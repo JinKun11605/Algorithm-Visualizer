@@ -9,21 +9,16 @@ const blockMargin = 20;
 // * Gọi hàm centerBlocks từ position-blocks.js
 const startLeftPosition = centerBlocks("visualization", blocks, blockMargin);
 
-const moveBlock = (block, newIndex) => {
+const moveBlock = (block, newIndex, time = 750) => {
     const newLeft = startLeftPosition + newIndex * (blockWidth + blockMargin);
 
-    block.style.transition = 'left 0.75s ease';
+    block.style.transition = `left ${time / 1000}s ease`;
     block.style.left = `${newLeft}px`;
 }
 
 const isGreen = (block) => {
     return block.style.backgroundColor == "rgb(77, 190, 138)";
 }
-
-// const isGreen = (block) => {
-//     const computedColor = window.getComputedStyle(block).backgroundColor;
-//     return computedColor === "rgb(77, 190, 138)"; // RGB của màu "#4DBE8A"
-// }
 
 const binaryInsertionSort = async (arr, blocks) => {
     const n = arr.length;
@@ -34,7 +29,7 @@ const binaryInsertionSort = async (arr, blocks) => {
         let tempBlock = blocks[i];
 
         blocks[i].style.backgroundColor = "#E94345"; //! Đỏ
-        await pause(500);
+        await pause(200);
 
         let l = 0;
         let r = i - 1;
@@ -45,7 +40,7 @@ const binaryInsertionSort = async (arr, blocks) => {
             //* Kiểm tra trước khi bật màu
             let wasGreen = isGreen(blocks[m]);
             //* Bật màu cho mid block
-            blocks[m].style.backgroundColor = "#3E97CF"; // zBlue
+            blocks[m].style.backgroundColor = "#3E97CF"; // Blue
             await pause(350);
 
             if (arr[m] > x) {
@@ -60,8 +55,8 @@ const binaryInsertionSort = async (arr, blocks) => {
             arr[j + 1] = arr[j];
             blocks[j + 1] = blocks[j];
 
-            moveBlock(blocks[j + 1], j + 1); //! Vì blocks[j + 1] = blocks[j];
-            await pause(350);
+            moveBlock(blocks[j + 1], j + 1, 150); //! Vì blocks[j + 1] = blocks[j];
+            await pause(100);
         }
 
         arr[l] = x;
