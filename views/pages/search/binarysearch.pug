@@ -1,0 +1,7 @@
+extends ../../layouts/default.pug
+include ../../mixins/search-form.pug
+
+block main
+    +base-search-form(pageTitle, "binarysearch",numbersString, numbersArray, numberFind)
+
+    script(type="module" src="/js/search/binarysearch.js")

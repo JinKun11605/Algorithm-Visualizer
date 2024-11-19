@@ -1,4 +1,4 @@
-mixin base-sort-form(pageTitle, path, numbersArray)
+mixin base-sort-form(pageTitle, path, numbersString, numbersArray)
     .container
         h1.text-center.mt-5 #{pageTitle}
         .mt-4
@@ -12,6 +12,7 @@ mixin base-sort-form(pageTitle, path, numbersArray)
                             class="form-control" 
                             type="text" 
                             placeholder="Ví dụ: 5, 3, 8, 4, 2"
+                            value=numbersString
                         )
                     .col-2
                         button.btn.btn-secondary#random-button(type="button") Ngẫu nhiên
