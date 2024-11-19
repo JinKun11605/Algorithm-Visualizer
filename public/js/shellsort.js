@@ -9,10 +9,10 @@ const blockMargin = 20;
 // * Gọi hàm centerBlocks từ position-blocks.js
 const startLeftPosition = centerBlocks("visualization", blocks, blockMargin);
 
-const moveBlock = (block, newIndex) => {
+const moveBlock = (block, newIndex, time = 750) => {
     const newLeft = startLeftPosition + newIndex * (blockWidth + blockMargin);
 
-    block.style.transition = 'left 0.75s ease';
+    block.style.transition = `left ${time / 1000}s ease`;
     block.style.left = `${newLeft}px`;
 }
 
@@ -46,7 +46,7 @@ const shellSort = async (arr, blocks) => {
             const otherColor = "#5C636A";
 
             colorGroupBlocks(blocks, gap, groupIndex, groupColor, otherColor);
-            await pause(300);
+            await pause(500);
 
             for (let i = groupIndex + gap; i < n; i += gap) {
                 let x = arr[i];
@@ -56,12 +56,12 @@ const shellSort = async (arr, blocks) => {
                 blocks[j].style.backgroundColor = "#E94345"; // Đỏ
                 await pause(300);
 
-                while (j >= gap && arr[j - gap] > x && (j - gap) % gap === groupIndex) {
+                while (j >= gap && arr[j - gap] > x && (j - gap) % gap == groupIndex) {
                     arr[j] = arr[j - gap];
                     blocks[j] = blocks[j - gap];
 
-                    moveBlock(blocks[j], j);
-                    await pause(750);
+                    moveBlock(blocks[j], j, 500);
+                    await pause(500);
 
                     // Đặt lại màu cho khối vừa di chuyển
                     blocks[j].style.backgroundColor = groupColor; // Màu nhóm
