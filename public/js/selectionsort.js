@@ -12,20 +12,21 @@ const selectionSort = async (arr, blocks) => {
 
     for (let i = 0; i < n - 1; i++) {
         let min = i;
-        blocks[i].style.backgroundColor = "#3E97CF"; //! Blue
+        blocks[i].style.backgroundColor = "#3E97CF"; // Blue
+        await pause(300)
         
         for (let j = i + 1; j < n; j++) {
             if (arr[min] > arr[j]) {
                 min = j;
             }
         }
-        await pause(500);
 
         if (min != i) {
             [arr[min], arr[i]] = [arr[i], arr[min]];
             blocks[min].style.backgroundColor = "#E94345"; //! Red
 
-            await swapBlocks(blocks[min], blocks[i]);
+            await pause(200);
+            await swapBlocks(blocks[min], blocks[i], 200);
         }
 
         blocks[i].style.backgroundColor = "#5C636A";

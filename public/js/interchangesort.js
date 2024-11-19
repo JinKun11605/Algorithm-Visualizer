@@ -1,46 +1,37 @@
 import { centerBlocks } from "../helpers/position-blocks.js";
 import { pause, swapBlocks } from "../helpers/swap-blocks.js";
 
-const blocks = Array.from(document.querySelectorAll('.block'));
+const blocks = Array.from(document.querySelectorAll(".block"));
 const numbersArray = blocks.map(block => parseInt(block.textContent));
 
 // * Gọi hàm centerBlocks từ position-blocks.js
 centerBlocks("visualization", blocks, 20);
 
-const bubbleSort = async (arr) => {
+const interchangeSort = async (arr) => {
     const n = arr.length;
 
     for (let i = 0; i < n - 1; i++) {
-        let swapped = false;
-        
-        for (let j = i+ 1; j < n; j++) {
-            blocks[i].style.backgroundColor = 'red';
-            blocks[j].style.backgroundColor = 'red';
-            // * Gọi hàm pause từ swap-blocks.js
-            await pause(500);
+        for (let j = i + 1; j < n; j++) {
+            // Bật màu 2 block đang so sánh
+            blocks[i].style.backgroundColor = "#3E97CF";
+            blocks[j].style.backgroundColor = "#3E97CF";
+            await pause(200);
 
             if (arr[i] > arr[j]) {
                 // Đổi chỗ hai phần tử trong mảng
                 [arr[i], arr[j]] = [arr[j], arr[i]];
-                // * Gọi hàm swapBlocks từ swap-blocks.js
-                await swapBlocks(blocks[i], blocks[j]);
-
-                swapped = true;
+                await swapBlocks(blocks[i], blocks[j], 200);
             }
-            blocks[i].style.backgroundColor = '#5C636A';
-            blocks[j].style.backgroundColor = '#5C636A';
+            blocks[i].style.backgroundColor = "#5C636A";
+            blocks[j].style.backgroundColor = "#5C636A";
         }
-        blocks[i].style.backgroundColor = 'green';
-
-        if (!swapped) break; // Nếu không có hoán đổi nào, dừng thuật toán
+        blocks[i].style.backgroundColor = "#4DBE8A";
     }
-    // for (let k = 0; k < n; k++) {
-    //     blocks[k].style.backgroundColor = 'green';
-    // }
+    blocks[n - 1].style.backgroundColor = "#4DBE8A"; // Bật màu cho block cuối cùng
 }
 
 // Nút "Bắt Đầu Sắp Xếp"
 const sortButton = document.querySelector("#sort-button");
-sortButton.addEventListener('click', () => {
-    bubbleSort(numbersArray);
-});
+sortButton.addEventListener("click", () => {
+    interchangeSort(numbersArray);
+})
