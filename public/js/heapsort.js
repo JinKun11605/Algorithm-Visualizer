@@ -10,13 +10,12 @@ const blockMargin = 20;
 // * Gọi hàm centerBlocks từ position-blocks.js
 const startLeftPosition = centerBlocks("visualization", blocks, blockMargin);
 
-const moveBlock = (block, newIndex) => {
+const moveBlock = (block, newIndex, time = 750) => {
     const newLeft = startLeftPosition + newIndex * (blockWidth + blockMargin);
 
-    block.style.transition = 'left 0.75s ease';
+    block.style.transition = `left ${time / 1000}s ease`;
     block.style.left = `${newLeft}px`;
 }
-
 const shift = async (arr, blocks, l, r) => {
     let i = l;
     let X = arr[i];
@@ -26,7 +25,6 @@ const shift = async (arr, blocks, l, r) => {
     while (j <= r) {
         // Bật màu đỏ cho nút cha
         blocks[i].style.backgroundColor = "#E94345"; // Đỏ
-        await pause(250);
 
         if (j < r && arr[j] < arr[j + 1]) {
             j++;
@@ -52,8 +50,8 @@ const shift = async (arr, blocks, l, r) => {
         arr[i] = arr[j];
         blocks[i] = blocks[j];
 
-        moveBlock(blocks[i], i);
-        await pause(750);
+        moveBlock(blocks[i], i, 500);
+        await pause(500);
 
         // Tắt màu sắc nút cha
         blocks[i].style.backgroundColor = "#5C636A";
@@ -67,8 +65,8 @@ const shift = async (arr, blocks, l, r) => {
         // Sắp lại cho đúng
         arr[i] = X;
         blocks[i] = tempBlock;
-        moveBlock(blocks[i], i);
-        await pause(750);
+        moveBlock(blocks[i], i, 500);
+        await pause(500);
 
         blocks[i].style.backgroundColor = "#5C636A";
     }
@@ -92,7 +90,7 @@ const heapSort = async (arr, blocks) => {
 
     while (r > 0) {
         [arr[0], arr[r]] = [arr[r], arr[0]];
-        await swapBlocks(blocks[0], blocks[r]);
+        await swapBlocks(blocks[0], blocks[r], 500);
 
         blocks[r].style.backgroundColor = "#4DBE8A";
 
