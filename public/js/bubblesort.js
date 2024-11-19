@@ -18,7 +18,7 @@ const bubbleSort = async (arr, blocks) => {
             blocks[j + 1].style.backgroundColor = "#3E97CF";
 
             // * Gọi hàm pause từ swap-blocks.js
-            await pause(100);
+            await pause(200);
 
             if (arr[j] > arr[j + 1]) {
                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];

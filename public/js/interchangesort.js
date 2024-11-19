@@ -15,7 +15,7 @@ const interchangeSort = async (arr) => {
             // Bật màu 2 block đang so sánh
             blocks[i].style.backgroundColor = "#3E97CF";
             blocks[j].style.backgroundColor = "#3E97CF";
-            await pause(100);
+            await pause(200);
 
             if (arr[i] > arr[j]) {
                 // Đổi chỗ hai phần tử trong mảng
