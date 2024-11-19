@@ -8,44 +8,53 @@ const numbersArray = blocks.map(block => parseInt(block.textContent));
 centerBlocks("visualization", blocks, 20);
 
 const quickSort = async (arr, left, right) => {
+    if (left >= right){
+        if (left === right) {
+            blocks[left].style.backgroundColor = "#4DBE8A"; //*
+        }
+        return;
+    }
+
     let i = left, j = right;
+    // Tô màu cho mảng con hiện tại
+    for (let k = left; k <= right; k++) {
+        blocks[k].style.backgroundColor = "#3E97CF"; //?
+    }
+    await pause(500);
+    
+
     const pivotIndex = Math.floor((left + right) / 2);
     const pivot = arr[pivotIndex];
 
     // Bật màu pivot
-    blocks[pivotIndex].style.backgroundColor = "#E94345"; // Đỏ
+    blocks[pivotIndex].style.backgroundColor = "#E94345"; //!
     await pause(500);
 
     while (i <= j) {
         // Bật màu phần tử đang xét từ trái
         while (arr[i] < pivot) {
-            blocks[i].style.backgroundColor = "#3E97CF";
             await pause(500);
             blocks[i].style.backgroundColor = "#5C636A";
+
             i++;
         }
-
-        // Bật màu phần tử đang xét từ phải
-        while (arr[j] > pivot){
-            blocks[j].style.backgroundColor = "#3E97CF";
+        
+        while (arr[j] > pivot) {
             await pause(500);
             blocks[j].style.backgroundColor = "#5C636A";
+
             j--;
         }
-        
 
         if (i <= j) {
+            await pause(500);
             if (i !== j && arr[i] !== arr[j]) {
-                blocks[i].style.backgroundColor = "#FFE32F"; // Vàng
-                blocks[j].style.backgroundColor = "#FFE32F"; // Vàng
-                
-                await pause(500);
-                await swapBlocks(blocks[i], blocks[j]);
+                await swapBlocks(blocks[i], blocks[j], 500);
                 [arr[i], arr[j]] = [arr[j], arr[i]];
-
-                blocks[i].style.backgroundColor = "#5C636A";
-                blocks[j].style.backgroundColor = "#5C636A";
             }
+            blocks[i].style.backgroundColor = "#5C636A";
+            blocks[j].style.backgroundColor = "#5C636A";
+
             i++;
             j--;
         }
@@ -63,7 +72,7 @@ const quickSort = async (arr, left, right) => {
     }
 
     // Đánh dấu các phần tử đã được sắp xếp
-    for (let k = left; k <= right; k++) {
+    for (let k = 0; k <= right; k++) { //! Đúng ra là left => Để từ đầu để fix lỗi thiểu block
         blocks[k].style.backgroundColor = "#4DBE8A";
     }
 }

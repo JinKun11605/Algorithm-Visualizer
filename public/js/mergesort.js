@@ -21,8 +21,8 @@ const merge = async (arr, blocks, l, m, r) => {
     const leftBlocks = blocks.slice(l, m + 1);
     const rightBlocks = blocks.slice(m + 1, r + 1);
     //* Đổi màu
-    await setColor(leftBlocks, '#3E97CF');
-    await setColor(rightBlocks, '#E94345');
+    await setColor(leftBlocks, '#3E97CF'); //?
+    await setColor(rightBlocks, '#E94345'); //!
 
     let i = 0, j = 0, k = l;
 
