@@ -15,12 +15,11 @@ const shakerSort = async (arr) => {
         let j = r;
         
         while (j > l) {
+            blocks[j - 1].style.backgroundColor = '#3E97CF';
+            blocks[j].style.backgroundColor = '#3E97CF';
+            await pause(100);
+            
             if (arr[j - 1] > arr[j]) {
-                blocks[j - 1].style.backgroundColor = '#3E97CF';
-                blocks[j].style.backgroundColor = '#3E97CF';
-
-                // * Gọi hàm pause từ swap-blocks.js
-                await pause(100);
                 [arr[j - 1], arr[j]] = [arr[j], arr[j - 1]];
 
                 // * Gọi hàm swapBlocks từ swap-blocks.js
@@ -40,12 +39,11 @@ const shakerSort = async (arr) => {
 
         j = l;
         while (r > j) {
-            if (arr[j] > arr[j + 1]) {
-                blocks[j].style.backgroundColor = '#3E97CF';
-                blocks[j + 1].style.backgroundColor = '#3E97CF';
+            blocks[j + 1].style.backgroundColor = '#3E97CF';
+            blocks[j].style.backgroundColor = '#3E97CF';
+            await pause(100);
 
-                // * Gọi hàm pause từ swap-blocks.js
-                await pause(100);
+            if (arr[j] > arr[j + 1]) {
                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
 
                 // * Gọi hàm swapBlocks từ swap-blocks.js
