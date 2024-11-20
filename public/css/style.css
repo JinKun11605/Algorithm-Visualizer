@@ -64,7 +64,22 @@
     border-radius: 5px;
 }
 
-#sort-button #search-button{
+.blockFind {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 70px;
+    height: 70px;
+    background-color: #FFA753;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.searchsort{
     color: #D9F4FF;
     background-color: #51A6C2;
     font-size: 20px;
@@ -75,7 +90,6 @@
     display: block;
     border: none;
 }
-
 
 .dropdown {
     padding: 10px 20px;

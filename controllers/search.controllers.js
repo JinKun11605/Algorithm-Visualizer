@@ -55,9 +55,7 @@ module.exports.binarysearchPost = (req, res) => {
         numbersArray = []
     }
 
-    // console.log(search_input, numbersArray)
-
-    res.render("pages/search/linearsearch", {
+    res.render("pages/search/binarysearch", {
         pageTitle: "Binary Search",
         numbersString: numbersString,
         numbersArray: numbersArray,
