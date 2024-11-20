@@ -46,3 +46,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Dropdown toggle logic
+    const dropdowns = document.querySelectorAll(".dropdown");
+    dropdowns.forEach((dropdown) => {
+        dropdown.addEventListener("click", () => {
+            // Toggle hiển thị submenu
+            const submenu = dropdown.nextElementSibling;
+            if (submenu && submenu.classList.contains("sub-menu")) {
+                submenu.style.display =
+                    submenu.style.display === "block" ? "none" : "block";
+            }
+        });
+    });
+
+    // Set trạng thái active cho liên kết hiện tại
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll(".inner-menu a");
+
+    links.forEach((link) => {
+        if (link.getAttribute("href") === currentPath) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
+        }
+    });
+});
+
