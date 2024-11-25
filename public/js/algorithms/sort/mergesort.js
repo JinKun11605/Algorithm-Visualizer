@@ -1,5 +1,5 @@
-import { centerBlocks } from "../helpers/position-blocks.js";
-import { pause } from "../helpers/swap-blocks.js";
+import { centerBlocks } from "../utils/position-blocks.js";
+import { pause, swapBlocks } from "../utils/swap-blocks.js";
 
 const blocks = Array.from(document.querySelectorAll('.block'));
 const numbersArray = blocks.map(block => parseInt(block.textContent));
